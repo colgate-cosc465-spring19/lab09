@@ -3,10 +3,14 @@
 import requests
 import re
 
+print('Domain\tManual\tAutomatic')
+
 # Examine each domain
 with open('domains.txt', 'r') as df:
-    for domain in df:
-        domain = domain.strip()
+    for line in df:
+        line = line.strip().split(',')
+        domain = line[0]
+        label = line[1]
 
         # Issue HTTP request
         # Set user-agent to Chrome, otherwise some sites refuse the request
@@ -18,6 +22,6 @@ with open('domains.txt', 'r') as df:
         # If the word climate appears less than 10 times, assume the page is
         # about climate change denial
         if len(m) < 10:
-            print(domain + ' DENIAL')
+            print(domain + '\t' + label + '\tDENYING')
         else:
-            print(domain + ' VALID')
+            print(domain + '\t' + label + '\tACCEPTING')
